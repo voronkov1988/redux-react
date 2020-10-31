@@ -1,14 +1,31 @@
 import React, { Fragment } from 'react'
+import styled from 'styled-components'
 
 class AddZagolovok extends React.Component{
     constructor(props){
         super(props)
         this.state = {
             zagolovok: [],
-            add: false
+            add: false,
+            ready: []
         }
         this.link = React.createRef()
         this.add = this.add.bind(this)
+        this.complete = this.complete.bind(this)
+    }
+
+    complete(e){
+        e.target.checked 
+        ? this.setState({
+            book: {
+                ready: this.state.ready.push(e.target.checked)
+            }
+        })
+        : this.setState({
+            book: {
+                ready: this.state.ready.pop(e.target.checked)
+            }
+        })
     }
 
     add(e){
@@ -25,6 +42,11 @@ class AddZagolovok extends React.Component{
     render(){
         return(
             <>
+            {
+                this.state.ready.length === this.state.zagolovok.length 
+                ? <ReadyBlock>Глава закончена</ReadyBlock>
+                : ''
+            }
             <form onSubmit={this.add}>
             <input ref={this.link} name='zagolovok' placeholder='добавить раздел' required></input>
             <button>Добавить Заголовок</button>
@@ -33,7 +55,7 @@ class AddZagolovok extends React.Component{
                 this.state.zagolovok.map((item,index) => {
                     return (
                         <Fragment key={index}>
-                            <p>{index + 1} заголовок. {item}<input type='checkbox'></input></p>
+                            <p>{index + 1} заголовок. {item}<input  onClick={this.complete} name='complete' type='checkbox'></input></p>
                         </Fragment>
                     )
                     
@@ -46,3 +68,10 @@ class AddZagolovok extends React.Component{
 }
 
 export default AddZagolovok
+
+const ReadyBlock = styled.div`
+    color: green;
+    font-size: 1.4em;
+    font-weight: bolder;
+    padding:10px 10px;
+`;

@@ -45,10 +45,10 @@ class AddGlava extends React.PureComponent{
             : ''}
             {
                 this.state.glava.map((item,index) => {
-                   return <Fragment key={index}>
+                   return <Glava key={index}>
                     <h2 >{index + 1} Глава. {item}</h2>
                     <AddZagolovok></AddZagolovok>
-                    </Fragment>
+                    </Glava>
                 })
             }
             
@@ -57,6 +57,12 @@ class AddGlava extends React.PureComponent{
     }
 }
 export default AddGlava
+
+const Glava = styled.div`
+    border: 1px solid gray;
+    background-color: #fff;
+    margin-top: 10px;
+`;
 
 const Add = styled.div`
     width: 100px;

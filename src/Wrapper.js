@@ -18,8 +18,9 @@ const Wraper =()=>{
 const Wrapper = styled.div`
     width: 90%;
     margin-left:5%;
-    height: 600px;
+    min-height: 600px;
     background-color: silver;
+    padding: 30px 30px;
 `;
 
 export default Wraper
