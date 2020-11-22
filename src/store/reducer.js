@@ -12,7 +12,7 @@ export const reducer = (state = initionalState, action) => {
         case ADD_GLAVA:
             return {
                 ...state, 
-                glava: state.glava.concat({title: action.payload, zagolovki: [], completed: true}),
+                glava: state.glava.concat({title: action.payload, zagolovki: [], filter: 'COMPLETED', completed: true}),
                 glavaLength: state.glavaLength + 1
             }
         case ADD_ZAGOLOVOK:
@@ -23,6 +23,7 @@ export const reducer = (state = initionalState, action) => {
                     {
                         ...state.glava[action.number],
                         completed : false,
+                        filter: 'UNCOMPLETED',
                         zagolovki: [
                             ...state.glava[action.number].zagolovki,
                             { text: action.payload, completed: false },
@@ -32,22 +33,20 @@ export const reducer = (state = initionalState, action) => {
                 ]
             }
         case CHECK_CHECKBOX:
-            console.log(state)
+            // console.log(state.glava.completed)
             return {
                 ...state,
                 ...state.glava[action.glava].zagolovki[action.index].completed = action.payload,
                 ...state.glava[action.glava].completed = checkStatusZagolovok(state.glava[action.glava].zagolovki),
+                ...state.glava[action.glava].filter = state.glava[action.glava].completed ? 'COMPLETED' : 'UNCOMPLETED'
             }
             
     }
     return state
 }
 
-const getTitle = (glava) => {
-    console.log(glava)
-}
-
 const checkStatusZagolovok = (zagolovki) => {
+    // console.log(zagolovki)
     let items = zagolovki.filter(item => {
         if(item.completed === false){
             return true
