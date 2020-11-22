@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import {createRef} from 'react'
-// import AddZagolovok from '../addZagolovok/AddZagolovok'
 import AddZagolovokList from '../addZagolovok/AddZagolovokList'
 
 
@@ -19,7 +18,7 @@ class AddGlava extends React.Component{
     }
 
     render(){
-        console.log(this.props.glava)
+        // console.log(this.props)
         return(
             <>
             <Wrapper>
@@ -30,11 +29,7 @@ class AddGlava extends React.Component{
             </Wrapper>
             <InfoLength>Всего глав {this.props.glavaLength}</InfoLength>
             <InfoLength>Всего заголовков {this.props.zagolovokLength}</InfoLength>
-            <Filter>
-                <FilterOption>ALL</FilterOption>
-                <FilterOption>COMPLETED</FilterOption>
-                <FilterOption>UNCOMPLETED</FilterOption>
-            </Filter>
+            
                 {
                     this.props.glava.map((item,index) => {
                         return (
@@ -64,25 +59,6 @@ const SuccessSpan = styled.span`
 
 const NotSuccessSpan = styled.span`
     color: red
-`;
-
-const Filter = styled.div`
-    display: flex;
-    justify-content: space-around;
-    margin-left:30px;
-    width: 600px;
-`;
-
-const FilterOption = styled.p`
-    background-color: #fff;
-    width:80%;
-    height: 30px;
-    padding-top: 10px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-left:2px;
 `;
 
 const OneGlava = styled.h2`

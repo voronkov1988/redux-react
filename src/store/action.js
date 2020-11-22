@@ -1,6 +1,7 @@
 export const ADD_GLAVA = 'ADD_GLAVA'
 export const ADD_ZAGOLOVOK = 'ADD_ZAGOLOVOK'
 export const CHECK_CHECKBOX = 'CHECK_CHECKBOX'
+export const SET_FILTER = 'SET_FILTER'
 
 export const addGlava = (text, number) => ({
     type: ADD_GLAVA,
@@ -19,4 +20,9 @@ export const checkbox = (el, index, numberGlava) => ({
     payload: el,
     index: index,
     glava: numberGlava
+})
+
+export const setFilter = (filterText) => ({
+    type: SET_FILTER,
+    payload: filterText
 })

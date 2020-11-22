@@ -1,9 +1,8 @@
-import {ADD_GLAVA, ADD_ZAGOLOVOK, CHECK_CHECKBOX} from './action'
+import {ADD_GLAVA, ADD_ZAGOLOVOK, CHECK_CHECKBOX, SET_FILTER} from './action'
 
 const initionalState = {
     filter: 'ALL',
     glavaLength: 0,
-    zagolovokLength: 0,
     glava: []
 }
 
@@ -12,7 +11,7 @@ export const reducer = (state = initionalState, action) => {
         case ADD_GLAVA:
             return {
                 ...state, 
-                glava: state.glava.concat({title: action.payload, zagolovki: [], filter: 'COMPLETED', completed: true}),
+                glava: state.glava.concat({title: action.payload, zagolovki: [], completed: true}),
                 glavaLength: state.glavaLength + 1
             }
         case ADD_ZAGOLOVOK:
@@ -33,14 +32,19 @@ export const reducer = (state = initionalState, action) => {
                 ]
             }
         case CHECK_CHECKBOX:
-            // console.log(state.glava.completed)
+            console.log(action)
             return {
                 ...state,
                 ...state.glava[action.glava].zagolovki[action.index].completed = action.payload,
                 ...state.glava[action.glava].completed = checkStatusZagolovok(state.glava[action.glava].zagolovki),
                 ...state.glava[action.glava].filter = state.glava[action.glava].completed ? 'COMPLETED' : 'UNCOMPLETED'
             }
-            
+        case SET_FILTER: 
+            console.log(action)
+            return {
+                ...state,
+                filter: action.payload
+            }
     }
     return state
 }
