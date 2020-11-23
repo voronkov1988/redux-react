@@ -15,7 +15,6 @@ class AddGlavaContainer extends  React.Component{
     }
 
     render(){
-        console.log(this.props)
         return(
             <>
             <Filter>

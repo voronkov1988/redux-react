@@ -22,7 +22,6 @@ export const reducer = (state = initionalState, action) => {
                     {
                         ...state.glava[action.number],
                         completed : false,
-                        filter: 'UNCOMPLETED',
                         zagolovki: [
                             ...state.glava[action.number].zagolovki,
                             { text: action.payload, completed: false },
@@ -32,15 +31,12 @@ export const reducer = (state = initionalState, action) => {
                 ]
             }
         case CHECK_CHECKBOX:
-            console.log(action)
             return {
                 ...state,
                 ...state.glava[action.glava].zagolovki[action.index].completed = action.payload,
                 ...state.glava[action.glava].completed = checkStatusZagolovok(state.glava[action.glava].zagolovki),
-                ...state.glava[action.glava].filter = state.glava[action.glava].completed ? 'COMPLETED' : 'UNCOMPLETED'
             }
         case SET_FILTER: 
-            console.log(action)
             return {
                 ...state,
                 filter: action.payload

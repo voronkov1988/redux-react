@@ -23,8 +23,8 @@ class AddGlava extends React.Component{
             <>
             <Wrapper>
                 <form onSubmit={(e)=>this.formSubmit(e)}>
-                    <input ref={this.link} name='glava'/>
-                    <button>Добавить</button>
+                    <Input ref={this.link} name='glava'/>
+                    <Button>Добавить</Button>
                 </form>
             </Wrapper>
             <InfoLength>Всего глав {this.props.glavaLength}</InfoLength>
@@ -52,6 +52,16 @@ class AddGlava extends React.Component{
         )
     }
 }
+
+export default AddGlava
+
+const Button = styled.button`
+    height: 2.5em;
+    margin-left:10px;
+    width: 10%;
+    border-radius: 5px;
+    background-color: greenyellow;
+`;
 
 const SuccessSpan = styled.span`
     color: green
@@ -85,4 +95,10 @@ const InfoLength = styled.span`
     padding: 5px;
 `;
 
-export default AddGlava
+const Input = styled.input`
+    width: 20%;
+    height:2em;
+    border-radius: 5px;
+    text-align: center;
+`;
+
