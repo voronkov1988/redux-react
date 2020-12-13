@@ -1,7 +1,7 @@
 import React from 'react'
 import AddGlava from './AddGlava'
 import {connect} from 'react-redux'
-import {addGlava, addZagolovok, checkbox, setFilter} from '../../store/action'
+import {addGlava, addZagolovok, checkbox, setFilter, checkTitle} from '../../store/action'
 import styled from 'styled-components'
 
 class AddGlavaContainer extends  React.Component{
@@ -29,6 +29,7 @@ class AddGlavaContainer extends  React.Component{
                 zagolovokLength={this.props.zagolovokLength}
                 glavaLength={this.props.glavaLength}
                 checkbox={this.props.checkbox}
+                checkTitle={this.props.checkTitle}
             />
             
             </>
@@ -55,7 +56,8 @@ const mapDispatchToProps = ({
     addGlava,
     addZagolovok,
     checkbox,
-    setFilter
+    setFilter,
+    checkTitle,
 })
 
 
@@ -64,10 +66,13 @@ const Filter = styled.div`
     justify-content: space-around;
     margin-left:30px;
     width: 600px;
+    color: white;
+    font-weight:bolder;
+    
 `;
 
 const FilterOption = styled.p`
-    background-color: #fff;
+    background-color: black;
     width:80%;
     height: 30px;
     padding-top: 10px;
@@ -76,6 +81,11 @@ const FilterOption = styled.p`
     border: 1px solid black;
     border-radius: 5px;
     margin-left:2px;
+    transition: .3s;
+    :hover{
+        background-color: darkorange;
+        transition: .3s;
+    }
 `;
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddGlavaContainer)

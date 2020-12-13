@@ -22,7 +22,7 @@ constructor(props){
                 </form>
             {
                 this.props.zagolovki.map((item, index)=>{
-                    return <AddZagolovok numberGlava={this.props.number} checkbox={this.props.checkbox} key={index} number={index} zagolovok={item}/>
+                    return <AddZagolovok checkTitle={this.props.checkTitle} numberGlava={this.props.number} checkbox={this.props.checkbox} key={index} number={index} zagolovok={item}/>
                 })
             }
             </div>

@@ -1,4 +1,4 @@
-import {ADD_GLAVA, ADD_ZAGOLOVOK, CHECK_CHECKBOX, SET_FILTER} from './action'
+import {ADD_GLAVA, ADD_ZAGOLOVOK, CHECK_CHECKBOX, SET_FILTER, CHECK_TITLE} from './action'
 
 const initionalState = {
     filter: 'ALL',
@@ -33,9 +33,51 @@ export const reducer = (state = initionalState, action) => {
         case CHECK_CHECKBOX:
             return {
                 ...state,
-                ...state.glava[action.glava].zagolovki[action.index].completed = action.payload,
-                ...state.glava[action.glava].completed = checkStatusZagolovok(state.glava[action.glava].zagolovki),
+                         glava:[
+                        ...state.glava.slice(0, action.glava),
+                        {
+                            ...state.glava[action.glava],
+                            zagolovki: [
+                                ...state.glava[action.glava].zagolovki.slice(0,action.index),
+                                {
+                                    ...state.glava[action.glava].zagolovki[action.index],
+                                    completed: action.payload,
+                                    
+                                },
+                                ...state.glava[action.glava].zagolovki.slice(action.index + 1)
+                            ],
+                        },
+                        ...state.glava.slice(action.glava + 1, state.glavaLength),
+                    ],       
             }
+                 
+            case CHECK_TITLE: 
+            return state.glava[action.glava].zagolovki.filter(item => !item.completed).length > 0
+            ? {
+                ...state,
+                glava: [
+                    ...state.glava.slice(0, action.glava),
+                    {
+                        ...state.glava[action.glava],
+                        completed: false
+                    },
+                    ...state.glava.slice(action.glava + 1, state.glava.length)
+                ]
+            }
+            : {
+                ...state,
+                glava: [
+                    ...state.glava.slice(0, action.glava),
+                    {
+                        ...state.glava[action.glava],
+                        completed: true
+                    },
+                    ...state.glava.slice(action.glava + 1, state.glava.length)
+                ]
+            }
+            
+            
+            
         case SET_FILTER: 
             return {
                 ...state,
@@ -45,15 +87,63 @@ export const reducer = (state = initionalState, action) => {
     return state
 }
 
+
+
 const checkStatusZagolovok = (zagolovki) => {
-    // console.log(zagolovki)
-    let items = zagolovki.filter(item => {
-        if(item.completed === false){
-            return true
-        }
-        
-    })
+    console.log(zagolovki)
+    let items = zagolovki.filter(item => !item.completed)
     return items.length > 0
-    ? false
-    : true
+    ? {...state, glava: completed = false}
+    : {...state, glava: completed = true}
 }
+
+
+
+
+
+
+         // glava:[
+                    //     ...state.glava.slice(0, action.glava),
+                    //     {
+                    //         ...state.glava[action.glava],
+                    //         zagolovki: [
+                    //             ...state.glava[action.glava].zagolovki.slice(0,action.index),
+                    //             {
+                    //                 ...state.glava[action.glava].zagolovki[action.index],
+                    //                 completed: action.payload
+                    //             },
+                    //             ...state.glava[action.glava].zagolovki.slice(action.index + 1)
+                    //         ],
+                    //         completed : checkStatusZagolovok(state.glava[action.glava].zagolovki)
+                    //     },
+                    //     ...state.glava.slice(action.glava + 1, state.glavaLength),
+                    // ],       
+
+
+
+
+                //     item.zagolovki.filter(i => !i.completed).length > 0
+                // ? {
+                //     ...state,
+                //     glava: [
+                //         ...state.glava.slice(0, action.glava),
+                //         {
+                //             ...state.glava[action.glava],
+                //             completed : false,
+                           
+                //         },
+                //         ...state.glava.slice(action.glava + 1, state.glavaLength)
+                //     ]
+                // }
+                // : {
+                //     ...state,
+                //     glava: [
+                //         ...state.glava.slice(0, action.glava),
+                //         {
+                //             ...state.glava[action.glava],
+                //             completed : false,
+                           
+                //         },
+                //         ...state.glava.slice(action.glava + 1, state.glavaLength)
+                //     ]
+                // }

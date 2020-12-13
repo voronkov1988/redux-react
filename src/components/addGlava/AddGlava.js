@@ -27,7 +27,7 @@ class AddGlava extends React.Component{
                     <Button>Добавить</Button>
                 </form>
             </Wrapper>
-            <InfoLength>Всего глав {this.props.glavaLength}</InfoLength>
+            <InfoLength>Всего глав {this.props.glava.length}</InfoLength>
             <InfoLength>Всего заголовков {this.props.zagolovokLength}</InfoLength>
             
                 {
@@ -41,7 +41,7 @@ class AddGlava extends React.Component{
                                         ? <SuccessSpan> - Ready</SuccessSpan>
                                         : <NotSuccessSpan> - Not ready</NotSuccessSpan>
                                     }
-                                    <AddZagolovokList checkbox={this.props.checkbox}  zagolovki={item.zagolovki} addZagolovok={this.props.addZagolovok} number={index}/>
+                                    <AddZagolovokList checkTitle={this.props.checkTitle} checkbox={this.props.checkbox}  zagolovki={item.zagolovki} addZagolovok={this.props.addZagolovok} number={index}/>
                                 </OneGlava>
                             </Fragment>
                         )
@@ -61,6 +61,7 @@ const Button = styled.button`
     width: 10%;
     border-radius: 5px;
     background-color: greenyellow;
+    cursor: pointer;
 `;
 
 const SuccessSpan = styled.span`

@@ -10,17 +10,13 @@ class AddZagolovok extends React.Component{
     }
 
     readyCheckbox(e){
-        // console.log(this.props)
         this.props.checkbox(e.target.checked, this.props.number, this.props.numberGlava)
+        this.props.checkTitle(this.props.numberGlava)
     }
 
     render(){
-        // console.log(this.props.zagolovok)
         return(
-            <>
-                <Wrap>#{this.props.number+1} - {this.props.zagolovok.text} <input onChange={this.readyCheckbox} type='checkbox'/></Wrap>
-            </>
-            
+            <Wrap>#{this.props.number+1} - {this.props.zagolovok.text} <input onChange={this.readyCheckbox} type='checkbox'/></Wrap>  
         )
     }
 }
