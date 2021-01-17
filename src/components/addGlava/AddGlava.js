@@ -29,7 +29,11 @@ class AddGlava extends React.Component{
             </Wrapper>
             <InfoLength>Всего глав {this.props.glava.length}</InfoLength>
             <InfoLength>Всего заголовков {this.props.zagolovokLength}</InfoLength>
-            
+            {
+                this.props.past.length > 0
+                ? <Undo onClick={() => this.props.undo()}>Откатить изменения</Undo>
+                : ''
+            }
                 {
                     this.props.glava.map((item,index) => {
                         return (
@@ -54,6 +58,17 @@ class AddGlava extends React.Component{
 }
 
 export default AddGlava
+
+const Undo = styled.button`
+width: 200px;
+background-color: black;
+color: white;
+font-weight: bolder;
+height: 3em;
+cursor: pointer;
+margin-left: 30px;
+border-radius: 5px;
+`;
 
 const Button = styled.button`
     height: 2.5em;

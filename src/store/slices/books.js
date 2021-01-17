@@ -1,20 +1,33 @@
-import {ADD_GLAVA, ADD_ZAGOLOVOK, CHECK_CHECKBOX, SET_FILTER, CHECK_TITLE} from './action'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import axios from 'axios'
+import undoable from 'redux-undo'
 
 const initionalState = {
     filter: 'ALL',
     glavaLength: 0,
+    isLoading: false,
+    isError: false,
     glava: [],
 }
 
-const reducer = (state = initionalState, action) => {
-    switch(action.type){
-        case ADD_GLAVA:
+const slices = createSlice({
+    name: 'books',
+    initionalState,
+    reducers:{
+        setFilter(state, action){
+            return {
+                ...state,
+                filter: action.payload
+            }
+        },
+        addGlava(state, action){
             return {
                 ...state, 
                 glava: state.glava.concat({title: action.payload, zagolovki: [], completed: true}),
                 glavaLength: state.glavaLength + 1
             }
-        case ADD_ZAGOLOVOK:
+        },
+        addZagolovok(state, action){
             return {
                 ...state,
                 glava: [
@@ -30,7 +43,8 @@ const reducer = (state = initionalState, action) => {
                     ...state.glava.slice(action.number + 1, state.glava.length)
                 ]
             }
-        case CHECK_CHECKBOX:
+        },
+        checkCheckbox(state, action){
             return {
                 ...state,
                          glava:[
@@ -50,8 +64,8 @@ const reducer = (state = initionalState, action) => {
                         ...state.glava.slice(action.glava + 1, state.glavaLength),
                     ],       
             }
-                 
-            case CHECK_TITLE: 
+        },
+        checkTitle(state, action){
             return state.glava[action.glava].zagolovki.filter(item => !item.completed).length > 0
             ? {
                 ...state,
@@ -75,17 +89,8 @@ const reducer = (state = initionalState, action) => {
                     ...state.glava.slice(action.glava + 1, state.glava.length)
                 ]
             }
-            
-            
-            
-        case SET_FILTER: 
-            return {
-                ...state,
-                filter: action.payload
-            }
+        }
     }
-    return state
-}
-
-
-export default reducer
+})
+export const {addGlava,setFilter,addZagolovok,checkCheckbox,checkTitle} = slices.actions
+export default slices.reducer

@@ -1,8 +1,9 @@
 import React from 'react'
 import AddGlava from './AddGlava'
 import {connect} from 'react-redux'
-import {addGlava, addZagolovok, checkbox, setFilter, checkTitle} from '../../store/action'
+import {addGlava, addZagolovok, checkbox, setFilter, checkTitle} from '../../store/slices/books'
 import styled from 'styled-components'
+import {ActionCreators} from 'redux-undo'
 
 class AddGlavaContainer extends  React.Component{
     constructor(props){
@@ -15,6 +16,7 @@ class AddGlavaContainer extends  React.Component{
     }
 
     render(){
+
         return(
             <>
             <Filter>
@@ -30,7 +32,10 @@ class AddGlavaContainer extends  React.Component{
                 glavaLength={this.props.glavaLength}
                 checkbox={this.props.checkbox}
                 checkTitle={this.props.checkTitle}
+                past={this.props.past}
+                undo={this.props.undo}
             />
+            
             
             </>
         )
@@ -44,12 +49,13 @@ const filters = {
 };
 
 const mapStateToProps = (state) => ({
-    glava: state.glava.filter(filters[state.filter]),
-    glavaLength: state.glava.length,
-    zagolovokLength: state.glava.reduce(
+    glava: state.present.glava.filter(filters[state.present.filter]),
+    glavaLength: state.present.glava.length,
+    zagolovokLength: state.present.glava.reduce(
         (acc, currentValue) => acc + currentValue.zagolovki.length,
         0
-    )
+    ),
+    past: state.past
 })
 
 const mapDispatchToProps = ({
@@ -58,8 +64,18 @@ const mapDispatchToProps = ({
     checkbox,
     setFilter,
     checkTitle,
+    undo: () => ActionCreators.undo()
 })
-
+ const Undo = styled.button`
+    width: 200px;
+    background-color: black;
+    color: white;
+    font-weight: bolder;
+    height: 3em;
+    cursor: pointer;
+    margin-left: 30px;
+    border-radius: 5px;
+ `;
 
 const Filter = styled.div`
     display: flex;
