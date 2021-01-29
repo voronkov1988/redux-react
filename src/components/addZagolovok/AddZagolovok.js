@@ -10,11 +10,13 @@ class AddZagolovok extends React.Component{
     }
 
     readyCheckbox(e){
-        this.props.checkbox(e.target.checked, this.props.number, this.props.numberGlava)
+        this.props.checkbox({checkbox: e.target.checked, number: this.props.number, numberGlava: this.props.numberGlava})
         this.props.checkTitle(this.props.numberGlava)
+        this.props.postBooks(this.props.glava)
     }
 
     render(){
+        // console.log(this.props)
         return(
             <Wrap>#{this.props.number+1} - {this.props.zagolovok.text} <input onChange={this.readyCheckbox} type='checkbox' checked={this.props.zagolovok.completed}/></Wrap>  
         )

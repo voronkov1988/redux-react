@@ -13,13 +13,24 @@ class AddGlava extends React.Component{
     formSubmit(e){
         e.preventDefault()
         this.props.addGlava(e.target.glava.value)
+        this.props.postBooks(this.props.glava.concat({title: e.target.glava.value, zagolovki: [], completed: true}))
         e.target.glava.value = ''
         this.link.current.focus()
     }
 
+    componentDidMount(){
+        this.props.fetchBooks()
+    }
+    // componentDidUpdate(){
+    //     this.props.fetchBooks()
+    // }
+
     render(){
         // console.log(this.props)
         return(
+            this.props.isLoading ?
+            <Loading>...Loading</Loading>
+            :
             <>
             <Wrapper>
                 <form onSubmit={(e)=>this.formSubmit(e)}>
@@ -45,7 +56,7 @@ class AddGlava extends React.Component{
                                         ? <SuccessSpan> - Ready</SuccessSpan>
                                         : <NotSuccessSpan> - Not ready</NotSuccessSpan>
                                     }
-                                    <AddZagolovokList checkTitle={this.props.checkTitle} checkbox={this.props.checkbox}  zagolovki={item.zagolovki} addZagolovok={this.props.addZagolovok} number={index}/>
+                                    <AddZagolovokList glava={this.props.glava} postBooks={this.props.postBooks} checkTitle={this.props.checkTitle} checkbox={this.props.checkbox}  zagolovki={item.zagolovki} addZagolovok={this.props.addZagolovok} number={index}/>
                                 </OneGlava>
                             </Fragment>
                         )
@@ -58,6 +69,12 @@ class AddGlava extends React.Component{
 }
 
 export default AddGlava
+
+const Loading = styled.div`
+    font-size:4em;
+    color: darkgoldenrod;
+    font-weight:bolder;
+`;
 
 const Undo = styled.button`
 width: 200px;

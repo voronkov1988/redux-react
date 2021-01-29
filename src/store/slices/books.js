@@ -1,8 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import axios from 'axios'
-import undoable from 'redux-undo'
+import httpClient from '../../helpers/axiosHelper'
 
-const initionalState = {
+const API = '5fdf7479ff9d67063814078b'
+
+const initialState = {
     filter: 'ALL',
     glavaLength: 0,
     isLoading: false,
@@ -10,9 +11,28 @@ const initionalState = {
     glava: [],
 }
 
+export const fetchBooks = createAsyncThunk(
+    'addGlava/fetchAll',
+    async () => {
+      const response = await httpClient.get('books')
+    //   console.log(response.data[0])
+      return response.data[0].glava
+    }
+  )
+
+  export const postBooks = createAsyncThunk(
+      'put/writeBack',
+        async (state) => {
+            await httpClient.put(
+                `books/601468f062aa200f00000753`,
+                { glava: JSON.stringify(state) },
+            )
+        }
+  )
+
 const slices = createSlice({
     name: 'books',
-    initionalState,
+    initialState ,
     reducers:{
         setFilter(state, action){
             return {
@@ -31,66 +51,79 @@ const slices = createSlice({
             return {
                 ...state,
                 glava: [
-                    ...state.glava.slice(0, action.number),
+                    ...state.glava.slice(0, action.payload.number),
                     {
-                        ...state.glava[action.number],
+                        ...state.glava[action.payload.number],
                         completed : false,
                         zagolovki: [
-                            ...state.glava[action.number].zagolovki,
-                            { text: action.payload, completed: false },
+                            ...state.glava[action.payload.number].zagolovki,
+                            { text: action.payload.value, completed: false },
                         ]
                     },
-                    ...state.glava.slice(action.number + 1, state.glava.length)
+                    ...state.glava.slice(action.payload.number + 1, state.glava.length)
                 ]
             }
         },
-        checkCheckbox(state, action){
+        checkbox(state, action){
             return {
                 ...state,
                          glava:[
-                        ...state.glava.slice(0, action.glava),
+                        ...state.glava.slice(0, action.payload.numberGlava),
                         {
-                            ...state.glava[action.glava],
+                            ...state.glava[action.payload.numberGlava],
                             zagolovki: [
-                                ...state.glava[action.glava].zagolovki.slice(0,action.index),
+                                ...state.glava[action.payload.numberGlava].zagolovki.slice(0,action.payload.number),
                                 {
-                                    ...state.glava[action.glava].zagolovki[action.index],
-                                    completed: action.payload,
+                                    ...state.glava[action.payload.numberGlava].zagolovki[action.payload.number],
+                                    completed: action.payload.checkbox,
                                     
                                 },
-                                ...state.glava[action.glava].zagolovki.slice(action.index + 1)
+                                ...state.glava[action.payload.numberGlava].zagolovki.slice(action.payload.number + 1)
                             ],
                         },
-                        ...state.glava.slice(action.glava + 1, state.glavaLength),
+                        ...state.glava.slice(action.payload.numberGlava + 1, state.glavaLength),
                     ],       
             }
         },
         checkTitle(state, action){
-            return state.glava[action.glava].zagolovki.filter(item => !item.completed).length > 0
+            return state.glava[action.payload].zagolovki.filter(item => !item.completed).length > 0
             ? {
                 ...state,
                 glava: [
-                    ...state.glava.slice(0, action.glava),
+                    ...state.glava.slice(0, action.payload),
                     {
-                        ...state.glava[action.glava],
+                        ...state.glava[action.payload],
                         completed: false
                     },
-                    ...state.glava.slice(action.glava + 1, state.glava.length)
+                    ...state.glava.slice(action.payload + 1, state.glava.length)
                 ]
             }
             : {
                 ...state,
                 glava: [
-                    ...state.glava.slice(0, action.glava),
+                    ...state.glava.slice(0, action.payload),
                     {
-                        ...state.glava[action.glava],
+                        ...state.glava[action.payload],
                         completed: true
                     },
-                    ...state.glava.slice(action.glava + 1, state.glava.length)
+                    ...state.glava.slice(action.payload + 1, state.glava.length)
                 ]
             }
         }
-    }
+    },
+    extraReducers: {
+        [fetchBooks.pending]: (state, action) => ({
+          ...state,
+          isLoading: true,
+          
+        }),
+        [fetchBooks.fulfilled]: (state, action) => ({
+            ...initialState,
+            isLoading: false,
+            glava: action.payload
+        }),
+        
+      }
 })
-export const {addGlava,setFilter,addZagolovok,checkCheckbox,checkTitle} = slices.actions
+export const {addGlava,setFilter,addZagolovok,checkbox,checkTitle} = slices.actions
 export default slices.reducer

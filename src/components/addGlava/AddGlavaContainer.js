@@ -1,7 +1,7 @@
 import React from 'react'
 import AddGlava from './AddGlava'
 import {connect} from 'react-redux'
-import {addGlava, addZagolovok, checkbox, setFilter, checkTitle} from '../../store/slices/books'
+import {addGlava, addZagolovok, checkbox, setFilter, checkTitle,fetchBooks,postBooks} from '../../store/slices/books'
 import styled from 'styled-components'
 import {ActionCreators} from 'redux-undo'
 
@@ -34,6 +34,9 @@ class AddGlavaContainer extends  React.Component{
                 checkTitle={this.props.checkTitle}
                 past={this.props.past}
                 undo={this.props.undo}
+                fetchBooks={this.props.fetchBooks}
+                postBooks={this.props.postBooks}
+                isLoading={this.props.isLoading}
             />
             
             
@@ -55,7 +58,8 @@ const mapStateToProps = (state) => ({
         (acc, currentValue) => acc + currentValue.zagolovki.length,
         0
     ),
-    past: state.past
+    past: state.past,
+    isLoading: state.present.isLoading
 })
 
 const mapDispatchToProps = ({
@@ -64,6 +68,8 @@ const mapDispatchToProps = ({
     checkbox,
     setFilter,
     checkTitle,
+    fetchBooks,
+    postBooks,
     undo: () => ActionCreators.undo()
 })
  const Undo = styled.button`
