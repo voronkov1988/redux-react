@@ -1,6 +1,7 @@
 import React from 'react'
 import AddZagolovok from './AddZagolovok'
 import styled from 'styled-components'
+import {connect} from 'react-redux'
 
 class AddZagolovokList extends React.Component{
 constructor(props){
@@ -16,7 +17,7 @@ constructor(props){
     }
 
     render(){
-        console.log(this.props)
+        // console.log(this.props)
         // console.log(this.props.addZagolovok)
         return(
             <div>

@@ -44,7 +44,7 @@ const slices = createSlice({
             return {
                 ...state, 
                 glava: state.glava.concat({title: action.payload, zagolovki: [], completed: true}),
-                glavaLength: state.glavaLength + 1
+                glavaLength: state.length + 1
             }
         },
         addZagolovok(state, action){
@@ -65,6 +65,7 @@ const slices = createSlice({
             }
         },
         checkbox(state, action){
+            console.log(action)
             return {
                 ...state,
                          glava:[
@@ -81,7 +82,7 @@ const slices = createSlice({
                                 ...state.glava[action.payload.numberGlava].zagolovki.slice(action.payload.number + 1)
                             ],
                         },
-                        ...state.glava.slice(action.payload.numberGlava + 1, state.glavaLength),
+                        ...state.glava.slice(action.payload.numberGlava + 1, state.glava.length),
                     ],       
             }
         },

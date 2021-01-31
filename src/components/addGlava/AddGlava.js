@@ -41,7 +41,7 @@ class AddGlava extends React.Component{
             <InfoLength>Всего глав {this.props.glava.length}</InfoLength>
             <InfoLength>Всего заголовков {this.props.zagolovokLength}</InfoLength>
             {
-                this.props.past.length > 0
+                this.props.past.length > 2
                 ? <Undo onClick={() => this.props.undo()}>Откатить изменения</Undo>
                 : ''
             }

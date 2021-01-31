@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-class AddZagolovok extends React.Component{
+class AddZagolovok extends React.PureComponent{
     
     constructor(props){
         super(props)
@@ -12,7 +12,13 @@ class AddZagolovok extends React.Component{
     readyCheckbox(e){
         this.props.checkbox({checkbox: e.target.checked, number: this.props.number, numberGlava: this.props.numberGlava})
         this.props.checkTitle(this.props.numberGlava)
+        
         this.props.postBooks(this.props.glava)
+        console.log(books)
+    }
+
+    componentDidUpdate(){
+        const books = this.props.books
     }
 
     render(){
