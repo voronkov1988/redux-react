@@ -21,9 +21,6 @@ class AddGlava extends React.Component{
     componentDidMount(){
         this.props.fetchBooks()
     }
-    // componentDidUpdate(){
-    //     this.props.fetchBooks()
-    // }
 
     render(){
         // console.log(this.props)

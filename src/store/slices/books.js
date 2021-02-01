@@ -65,7 +65,6 @@ const slices = createSlice({
             }
         },
         checkbox(state, action){
-            console.log(action)
             return {
                 ...state,
                          glava:[

@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import {store} from '../../store/store'
 
-
-class AddZagolovok extends React.PureComponent{
+class AddZagolovok extends React.Component{
     
     constructor(props){
         super(props)
@@ -12,14 +12,9 @@ class AddZagolovok extends React.PureComponent{
     readyCheckbox(e){
         this.props.checkbox({checkbox: e.target.checked, number: this.props.number, numberGlava: this.props.numberGlava})
         this.props.checkTitle(this.props.numberGlava)
-        
-        this.props.postBooks(this.props.glava)
-        console.log(books)
+        this.props.postBooks(store.getState().present.glava)
     }
 
-    componentDidUpdate(){
-        const books = this.props.books
-    }
 
     render(){
         // console.log(this.props)

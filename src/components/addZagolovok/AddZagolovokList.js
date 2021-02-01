@@ -1,7 +1,7 @@
 import React from 'react'
 import AddZagolovok from './AddZagolovok'
 import styled from 'styled-components'
-import {connect} from 'react-redux'
+import {store} from '../../store/store'
 
 class AddZagolovokList extends React.Component{
 constructor(props){
@@ -12,8 +12,9 @@ constructor(props){
     confirmForm(e){
         e.preventDefault()
         this.props.addZagolovok({value: e.target.zagolovok.value,number: this.props.number})
-        this.props.postBooks(this.props.glava)
-        console.log(this.props.glava)
+        this.props.postBooks(store.getState().present.glava)
+        
+        // console.log(this.props.glava)
     }
 
     render(){
