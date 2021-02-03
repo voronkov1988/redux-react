@@ -62,7 +62,7 @@ const mapStateToProps = (state) => ({
     isLoading: state.present.isLoading
 })
 
-const mapDispatchToProps = ({
+ const mapDispatchToProps = ({
     addGlava,
     addZagolovok,
     checkbox,

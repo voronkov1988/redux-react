@@ -9,7 +9,7 @@ export const handlers = [
       ctx.json({...Book})
     )
   }),
-  rest.get("https://books-7d21.restdb.io/rest/books?q={'_parent_id':'601468f062aa200f00000753'}", (req, res, ctx) => {
+  rest.put("https://books-7d21.restdb.io/rest/books?q={'_id':'601468f062aa200f00000753'}", (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json(Book.glava)
